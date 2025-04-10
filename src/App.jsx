@@ -55,7 +55,7 @@ function App() {
 
   return (
     <div>
-      <header>
+      <header className='text-4xl text-black text-center py-4'>
         TODO-MERN
       </header>
       <Search search={search} setSearch={setSearch} submitTask={submitTask}/>
