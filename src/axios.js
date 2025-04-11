@@ -1,11 +1,15 @@
 import axios from "axios";
 
-const API_URL = "https://crispy-carnival-5j6qjgrp5q729q6-5000.app.github.dev/api/todos";
+const API_URL = "http://localhost:5000/api/todos/"; // Updated API URL
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
     headers : {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": true,
     }
 })
 

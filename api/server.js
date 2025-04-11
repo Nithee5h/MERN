@@ -13,19 +13,21 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cors({
-    origin: 'https://crispy-carnival-5j6qjgrp5q729q6-5173.app.github.dev/', // Replace with the actual client's origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Allow credentials if needed
-    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
-}));
+// app.use(cors({
+//     origin: 'http://localhost:5173/', // Replace with the actual client's origin
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true, // Allow credentials if needed
+//     optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+// }));
 
-app.use((_, res, next) => {
-    const allowedOrigin = 'https://crispy-carnival-5j6qjgrp5q729q6-5173.app.github.dev/'; // Replace with the actual client's origin
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
-    res.setHeader('Vary', 'Origin'); // Important when dynamically setting Access-Control-Allow-Origin
-    next();
-  });
+app.use(cors());
+
+// app.use((_, res, next) => {
+//     const allowedOrigin = 'http://localhost:5173/'; // Replace with the actual client's origin
+//     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+//     res.setHeader('Vary', 'Origin'); // Important when dynamically setting Access-Control-Allow-Origin
+//     next();
+//   });
 
 app.get("/", (req, res) => {
     res.json("hello world");

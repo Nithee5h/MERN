@@ -17,6 +17,7 @@ function App() {
         setIsLoading(true);
         const data = await fetchTodo();
         setTasks(data);
+        console.log(data)
         setIsLoading(false);
       } catch (err) { 
         console.error("Error: ", err);
@@ -26,6 +27,7 @@ function App() {
     }
 
     getTasks();
+
   }, [])
 
   const submitTask = async (search) => {
