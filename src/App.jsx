@@ -1,27 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Search from './components/Search'
 import TaskPage from './components/TaskPage';
+import { createTodo, fetchTodo } from './axios';
 
 function App() {
   const [search, setSearch] = useState('');
   const [tasks, setTasks] = useState(
     JSON.parse(localStorage.getItem('tasks')) || []
   )
+  const [isLoading, setIsLoading] = useState(false);
 
-  const submitTask = (search) => {
-    const current_id = tasks.length + 1
-    // console.log(tasks);
-    const newTask = {
-      id: current_id,
-      // title: search,
-      description: search,
-      completed: false
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchTodo();
+        setTasks(data);
+        setIsLoading(false);
+      } catch (err) { 
+        console.error("Error: ", err);
+      } finally {
+        setIsLoading(false);
+      }
     }
-    // console.log(newTask);
-    
-    setTasks([...tasks, newTask])
-    localStorage.setItem('tasks', JSON.stringify([...tasks, newTask]))
+
+    getTasks();
+  }, [])
+
+  const submitTask = async (search) => {
+    if (!search.trim()) return;
+
+    try {
+      const newTask = await createTodo(search);
+      setTasks([...tasks, newTask]);
+    } catch (err) {
+      console.error("Error");
+    }
   }
 
   const completeTask = (id) => {
@@ -54,6 +69,8 @@ function App() {
     setTasks(newTasks)
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
+
+  if (isLoading) return "Loading";
 
   return (
     <div>
